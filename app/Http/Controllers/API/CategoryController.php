@@ -33,6 +33,6 @@ class CategoryController extends Controller
     }
 
     public function get(Request $request){
-
+        
     }
 }
