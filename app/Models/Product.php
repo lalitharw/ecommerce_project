@@ -27,7 +27,12 @@ class Product extends Model
 
     public function carts()
     {
-        return $this->belongsToMany("product_id", "carts", "user_id");
+        return $this->belongsToMany(User::class, "carts", "user_id", "product_id");
+    }
+
+    public function wishlists()
+    {
+        return $this->belongsToMany(User::class, "wishlists", "product_id", "user_id");
     }
 
 
