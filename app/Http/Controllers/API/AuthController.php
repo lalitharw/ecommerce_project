@@ -21,8 +21,17 @@ class AuthController extends Controller
 
 
     public function login(Request $request)
-    
     {
         return $this->googleAuth->login($request->firebase_token);
     }
+
+
+    public function logout()
+    {
+        $this->googleAuth->logout();
+    }
+
+    // public function signUp(){
+
+    // }
 }

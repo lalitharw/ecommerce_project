@@ -48,4 +48,29 @@ class GoogleService
             "data" => $user
         ], 200);
     }
+
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+
+        return response([
+            "message" => "Logout Successfully",
+            "status" => true
+        ], 200);
+    }
+
+    public function signUp($name, $phone)
+    {
+        $user = new User();
+
+        $user->name = $name;
+        $user->phone = $phone;
+
+        return response([
+            "message" => "User Data Saved Successfully",
+            "status" => true
+        ], 200);
+    }
+
+
 }
