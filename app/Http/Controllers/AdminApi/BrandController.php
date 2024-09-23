@@ -5,6 +5,9 @@ namespace App\Http\Controllers\AdminApi;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+// helper function
+use App\Helper\FileUploader;
+
 // models
 use App\Models\Brand;
 
@@ -20,7 +23,10 @@ class BrandController extends Controller
         $brand = new Brand();
 
         $brand->title = $request->title;
-        $brand->image = $request->image;
+
+        if ($request->image) {
+            $brand->image = FileUploader::uploadFile($request->image, "images/brands");
+        }
 
         $brand->save();
 
@@ -64,12 +70,15 @@ class BrandController extends Controller
 
     public function update(Request $request)
     {
-        $brand_id = $request->brand_id;
+        $brand_id = $request->id;
 
         $brand = Brand::find($brand_id);
 
         $brand->title = $request->title;
-        $brand->image = $request->image;
+
+        if ($request->image) {
+            $brand->image = FileUploader::uploadFile($request->image, "images/brand");
+        }
         $brand->save();
 
         return response([

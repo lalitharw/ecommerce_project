@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminApi\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 // controllers
@@ -19,9 +20,14 @@ Route::prefix("admin")->group(function () {
         Route::controller(BrandController::class)->prefix("brands")->group(function () {
             Route::get("/", "get");
             Route::post("create-brand", "store");
-            Route::delete("destroy-brand", "delete");
+            Route::delete("delete-brand", "delete");
             Route::get("edit-brand", "edit");
-            Route::put("update-brand", "update");
+            Route::post("update-brand", "update");
+        });
+
+        Route::controller(CategoryController::class)->prefix("category")->group(function () {
+            Route::get("/", "get");
+            Route::post("create-category", "store");
         });
     });
 

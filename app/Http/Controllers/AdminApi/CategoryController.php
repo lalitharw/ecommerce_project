@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AdminApi;
 
+use App\Helper\FileUploader;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,10 @@ class CategoryController extends Controller
 
         $category = new Category();
         $category->title = $request->title;
-        $category->image = $request->image;
+
+        if ($request->image) {
+            $category->image = FileUploader::uploadFile($request->image, "/images/category");
+        }
 
         $category->save();
 
@@ -41,7 +45,14 @@ class CategoryController extends Controller
 
     public function delete(Request $request)
     {
-        $category_id = $request->query("category_id");
+        $category_id = $request->query("id");
+
+        Category::find($category_id)->delete();
+
+        return response([
+            "message" => "Category Deleted Successfully",
+            "status" => true
+        ], 200);
 
 
     }
