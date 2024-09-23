@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\AdminApi;
 
+use App\Helper\FileUploader;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 // models
 use App\Models\Product;
+use App\Models\ProductImage;
 
 class ProductController extends Controller
 {
@@ -27,6 +29,15 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->description = $request->description;
         $product->save();
+
+        if ($product) {
+            foreach ($request->images as $image) {
+                $productImage = new ProductImage();
+                $productImage->product_id = $product->id;
+                $productImage->product_image = FileUploader::uploadFile($image, "product_images");
+                $productImage->save();
+            }
+        }
 
         return response([
             "message" => "Product Added Successfully",
