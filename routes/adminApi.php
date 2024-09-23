@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\AdminApi\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 // controllers
-use App\Http\Controllers\AdminApi\BrandController;
 use App\Http\Controllers\AdminApi\AuthController;
+use App\Http\Controllers\AdminApi\BrandController;
+use App\Http\Controllers\AdminApi\CategoryController;
+use App\Http\Controllers\AdminApi\ProductController;
 
 
 
@@ -28,6 +29,10 @@ Route::prefix("admin")->group(function () {
         Route::controller(CategoryController::class)->prefix("category")->group(function () {
             Route::get("/", "get");
             Route::post("create-category", "store");
+        });
+
+        Route::controller(ProductController::class)->prefix("products")->group(function () {
+            Route::post("create-product", "store");
         });
     });
 
